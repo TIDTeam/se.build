@@ -35,6 +35,7 @@ Project配置文件
 动态创建.htaccess文件需要在构建项目的根据下，创建一个.htaccess的文件，格式如下
   
    Options -Indexes +FollowSymLinks
+   
    RewriteEngine On
    
    #{rules}
