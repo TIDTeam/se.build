@@ -122,6 +122,7 @@ var configure = {
                     var file = null;
 
                     o.options = {
+                        "preserveComments": "some",
                         "mangle": {
                             "except": ["require", "exports", "module"]
                         }
@@ -148,6 +149,7 @@ var configure = {
                     var file = null;
 
                     o.options = {
+                        "preserveComments": "some",
                         "mangle": {
                             "except": ["require", "exports", "module"]
                         },
@@ -175,6 +177,7 @@ var configure = {
                     var file = null;
 
                     o.options = {
+                        "preserveComments": "some",
                         "mangle": {
                             "except": ["require", "exports", "module"]
                         },

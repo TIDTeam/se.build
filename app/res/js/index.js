@@ -243,18 +243,18 @@
             var buf = [];
 
             buf.push('<dl class="dir">');
-            buf.push('<dt class="dirname"><input type="checkbox" name="' + type + '_dir" id="' + type + '_' + sum + '" value="' + type + "," + sum + '" data-hook="1" disabled="disabled"><label for="' + type + '_' + sum + '">' + pathname + '</label></dt>');
+            buf.push('<dt class="dirname"><input type="checkbox" name="' + type + '_dir" id="' + type + '_' + sum + '" value="' + type + "," + sum + '" data-hook="1" data-filetype="dir" disabled="disabled"><label for="' + type + '_' + sum + '">' + pathname + '</label></dt>');
 
             for(var i = 0; i < size; i++){
                 info = filelist[i];
 
-                buf.push('<dd class="filename"><input' + (true === checked ? ' checked="checked"':'') + ' type="checkbox" name="' + type + '_file" id="' + type + '_' + sum + "_" + info.checksum + '" value="' + type + "," + sum + "," + info.checksum + "," + info.absoulte + '" data-hook="1"><label for="' + type + '_' + sum + "_" + info.checksum + '"' + (info.isUpdate ? ' class="update"' : '') + '>' + info.filename + '</label></dd>');
+                buf.push('<dd class="filename"><input' + (true === checked ? ' checked="checked"  disabled="disabled"':'') + ' type="checkbox" name="' + type + '_file" id="' + type + '_' + sum + "_" + info.checksum + '" value="' + type + "," + sum + "," + info.checksum + "," + info.absoulte + '" data-hook="1" data-filetype="file"><label for="' + type + '_' + sum + "_" + info.checksum + '"' + (info.isUpdate ? ' class="update"' : '') + '>' + info.filename + '</label></dd>');
             }
 
             for(var key in data){
                 if("filelist" != key && "checksum" != key && data.hasOwnProperty(key)){
                     buf.push('<dd class="subdir">');
-                    buf.push(this.tree(type, key, data[key]));
+                    buf.push(this.tree(type, key, data[key], checked));
                     buf.push('</dd>');
                 }
             }
@@ -314,6 +314,7 @@
             var type = null;
             var checksum = null;
             var path = null;
+            var filetype = null;
             var map = {
                 "size": 0,
                 "base": null,
@@ -324,7 +325,9 @@
             for(var i = 0; i < size; i++){
                 item = items[i];
 
-                if("checkbox" != item.type || item.disabled || false === item.checked){
+                filetype = item.getAttribute("data-filetype");
+
+                if("checkbox" != item.type || "file" != filetype || false === item.checked){
                     continue;
                 }
 

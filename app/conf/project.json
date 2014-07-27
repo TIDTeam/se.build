@@ -31,8 +31,8 @@
                             "lib": { 
                                 "se.mix.js": [
                                     {
-                                        "banner": "/*! Zepto v1.1.3 - zepto event ajax form ie - zeptojs.com/license */\n",
-                                        "file": "zepto-1.1.3.js"
+                                        "banner": "/*! Zepto v1.1.4 - zepto event ajax form ie - zeptojs.com/license */\n",
+                                        "file": "zepto-1.1.4.js"
                                     }, 
                                     {
                                         "banner": "/*! Sea.js 2.3.0 | seajs.org/LICENSE.md */\n",
@@ -101,8 +101,8 @@
                             "lib": { 
                                 "se.mix.js": [
                                     {
-                                        "banner": "/*! Zepto v1.1.3 - zepto event ajax form ie - zeptojs.com/license */\n",
-                                        "file": "zepto-1.1.3.js"
+                                        "banner": "/*! Zepto v1.1.4 - zepto event ajax form ie - zeptojs.com/license */\n",
+                                        "file": "zepto-1.1.4.js"
                                     }, 
                                     {
                                         "banner": "/*! Sea.js 2.3.0 | seajs.org/LICENSE.md */\n",
