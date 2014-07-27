@@ -1,5 +1,6 @@
-Project配置文件
+<h1>Project配置文件</h1>
 
+<pre>
 - base                     //{String} 构建项目部署基础路径
 + projects                 //{Array} 项目配置
   - name                   //{String} 项目名称
@@ -27,22 +28,24 @@ Project配置文件
           + [filename]     //{Array} 合并后的文件名称
             - banner       //{String} 文件banner
             - file         //{String} 文件名
+</pre>
 
-资源文件版本控制
-资源版本控制采用Apache的URLWrite实现，通过动态生成.htaccess文件来保障资源更新问题。
+<h1>资源文件版本控制</h1>
+<p>资源版本控制采用Apache的URLWrite实现，通过动态生成.htaccess文件来保障资源更新问题。</p>
 
-.htaccess文件说明
-动态创建.htaccess文件需要在构建项目的根据下，创建一个.htaccess的文件，格式如下
-  
+<h1>.htaccess文件说明</h1>
+<p>动态创建.htaccess文件需要在构建项目的根据下，创建一个.htaccess的文件，格式如下</p>
+<pre>  
    Options -Indexes +FollowSymLinks
    
    RewriteEngine On
    
    #{rules}
-   
+</pre>
+<p>
 在构建完成后，工具会去找.htaccess模板文件，如果没有则忽略，否则会对模板文件进行解析，
 并且将 #{rules} 替换成正式配置内容，具体可以参考 htaccess.js 文件中的 addRule() 方法 和 write()方法
-   
+</p>   
    
    
    
