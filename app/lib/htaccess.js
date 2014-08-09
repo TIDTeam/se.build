@@ -2,7 +2,8 @@
 
 "use strict"
 
-var fs = require("fs");
+var fs    = require("fs");
+var spawn = require("child_process").spawn;
 
 var $sock = null;
 var $base = null;
@@ -35,7 +36,7 @@ var HTAccessFile = {
 
         this.rules.push("RewriteCond %{REQUEST_URI} ^" + uri + "$ [NC] [AND]\n");
         this.rules.push("RewriteCond %{QUERY_STRING} !^.+$ [NC]\n")
-        this.rules.push("RewriteRule " + uri.substr(1) + "$ " + uri + "." + sign + " [PT,L]\n\n");
+        this.rules.push("RewriteRule " + uri.substr(1) + "$ " + uri + "?" + sign + " [QSA,R=301,L]\n\n");
     },
     read : function(){
         return fs.readFileSync($tpl, "UTF-8");
@@ -65,6 +66,41 @@ var HTAccessFile = {
 
         return stat.isFile();
     },
+    rename : function(path){
+        fs.open(path + ".sha1", "r", function(err, fd){
+            console.dir(err)
+            if(!err){
+                var sign = fs.readFileSync(path + ".sha1", {
+                    encoding: "utf8"
+                });
+                fs.closeSync(fd);
+
+                console.log("sign: " + sign);
+                console.log("path: " + path);
+                console.log("to: " + path + "." + sign);
+
+                //spawn("cp", [path, path + "." + sign]);
+
+                var _fd = fs.openSync(path, "r");
+                if(_fd){
+                    var irs = fs.createReadStream(path, {
+                        flags: 'r',
+                        fd: _fd,
+                        mode: "0644",
+                        autoClose: true
+                    });
+                    var ows = fs.createWriteStream(path + "." + sign, {
+                        mode : "0644"
+                    });
+
+                    irs.pipe(ows);
+
+                    HTAccessFile.addRule(path, sign);
+
+                }
+            }
+        });
+    },
     ls : function(root, path){
         if(!fs.existsSync(path)){
             emit("deploy", "deploy path not found(" + path + ")");
@@ -75,9 +111,6 @@ var HTAccessFile = {
         var size = files.length;
         var file = null;
         var absPath = null;
-
-        console.log("path: " + path);
-        console.log("filesize: " + size);
 
         for(var i = 0; i < size; i++){
             file = files[i];
@@ -101,13 +134,15 @@ var HTAccessFile = {
             if(this.isDirectory(absPath)){
                 this.ls(absPath + "/", absPath);
             }else if(this.isFile(absPath) && ext.test(absPath)){
-                var sign = fs.readFileSync(absPath + ".sha1", "UTF-8");
+                if(fs.existsSync(absPath + ".sha1")){
+                    var sign = fs.readFileSync(absPath + ".sha1", {encoding:"utf8"});
 
-                fs.writeFileSync(absPath + "." + sign, fs.readFileSync(absPath, "UTF-8"), {
-                    "encoding": "utf8"
-                });
+                    // fs.writeFileSync(absPath + "." + sign, fs.readFileSync(absPath, "UTF-8"), {
+                    //     "encoding": "utf8"
+                    // });
 
-                HTAccessFile.addRule(absPath, sign);
+                    HTAccessFile.addRule(absPath, sign);
+                }
             }else{
                 continue;
             }

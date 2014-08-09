@@ -2,10 +2,80 @@
     "base": "/data/wwwroot/seshenghuo/build.seshenghuo.com/projects",
     "projects": [
         {
+            "name": "se.lib",
+            "alias": "se_lib",
+            "vctrl": "none",
+            "base": "/data/wwwroot/seshenghuo/build.seshenghuo.com/projects/se.lib/build", 
+            "buildroot": "/se.lib/src", 
+            "banner": "/*! Copyright (c) SESHENGHUO.COM - Author: LIJUN - Email: zwlijun@gmail.com */\n",
+            "workspace": {
+                "env": [
+                    {
+                        "name": "正式环境",
+                        "alias": "release",
+                        "root": "/data/wwwroot/seshenghuo/build.seshenghuo.com/projects/se.lib/build/",
+                        "path": "/"
+                    }
+                ],
+                "deploy": [
+                    {
+                        "name": "JavaScript",
+                        "alias": "js",
+                        "type": "js",
+                        "path": {
+                            "lib": "js/lib/",
+                            "mod": "js/mod/",
+                            "logic": "js/logic/"
+                        },
+                        "merge": {
+                            "lib": { 
+                                "se.mix.js": [
+                                    {
+                                        "banner": "/*! Zepto v1.1.4 - zepto event ajax form ie - zeptojs.com/license */\n",
+                                        "file": "zepto-1.1.4.js"
+                                    }, 
+                                    {
+                                        "banner": "/*! Sea.js 2.3.0 | seajs.org/LICENSE.md */\n",
+                                        "file": "sea-2.3.0.js"
+                                    }, 
+                                    {
+                                        "banner": "/*! Sea.js config */\n",
+                                        "file": "se.js"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "name": "CSS",
+                        "alias": "css",
+                        "type": "css",
+                        "path": {
+                            "lib": "",
+                            "mod": "",
+                            "logic": "css/"
+                        },
+                        "merge": null
+                    },
+                    {
+                        "name": "Images",
+                        "alias": "img",
+                        "type": "img",
+                        "path": {
+                            "lib": "",
+                            "mod": "",
+                            "logic": "img/"
+                        },
+                        "merge": null
+                    }
+                ]
+            }
+        },
+        {
             "name": "res.seshenghuo.com",
             "alias": "se_res",
             "vctrl": "none",
-            "base": "/data/wwwroot/seshenghuo/res.seshenghuo.com/release", 
+            "base": "/data/wwwroot/seshenghuo/res.seshenghuo.com", 
             "buildroot": "/res.seshenghuo.com", 
             "banner": "/*! Copyright (c) SESHENGHUO.COM - Author: LIJUN - Email: zwlijun@gmail.com */\n",
             "workspace": {
@@ -13,7 +83,7 @@
                     {
                         "name": "正式环境",
                         "alias": "release",
-                        "root": "/data/wwwroot/seshenghuo/res.seshenghuo.com/release/htdocs/",
+                        "root": "/data/wwwroot/seshenghuo/res.seshenghuo.com/htdocs/",
                         "path": "/htdocs/"
                     }
                 ],
@@ -139,6 +209,53 @@
                         "merge": null
                     }
                 ]
+            }
+        },
+        {
+            "name": "pingan.webapp",
+            "alias": "pingan_res",
+            "vctrl": "none",
+            "base": "/data/wwwroot/elingdong_lightapp/WebContent", 
+            "buildroot": "/pingan.webapp", 
+            "banner": "/*! Copyright (c) SESHENGHUO.COM - Author: LIJUN - Email: zwlijun@gmail.com */\n",
+            "workspace": {
+                "env": [
+                    {
+                        "name": "正式环境",
+                        "alias": "release",
+                        "root": "/data/wwwroot/elingdong_lightapp/WebContent",
+                        "path": "/res/"
+                    }
+                ],
+                "deploy": [
+                    {
+                        "name": "JavaScript",
+                        "alias": "js",
+                        "type": "js",
+                        "path": {
+                            "lib": "js/lib/",
+                            "mod": "js/mod/",
+                            "logic": "js/logic/"
+                        },
+                        "merge": {
+                            "lib": { 
+                                "se.mix.js": [
+                                    {
+                                        "banner": "/*! Zepto v1.1.4 - zepto event ajax form ie - zeptojs.com/license */\n",
+                                        "file": "zepto-1.1.4.js"
+                                    }, 
+                                    {
+                                        "banner": "/*! Sea.js 2.3.0 | seajs.org/LICENSE.md */\n",
+                                        "file": "sea-2.3.0.js"
+                                    }, 
+                                    {
+                                        "banner": "/*! Sea.js config */\n",
+                                        "file": "se.js"
+                                    }
+                                ]
+                            }
+                        }
+                    }                ]
             }
         }
     ]
