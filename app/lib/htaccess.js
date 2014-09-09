@@ -3,7 +3,7 @@
 "use strict"
 
 var fs    = require("fs");
-var spawn = require("child_process").spawn;
+var exec = require("child_process").exec;
 
 var $sock = null;
 var $base = null;
@@ -28,7 +28,12 @@ var emit = function(state, message){
 var HTAccessFile = {
     rules : [],
     addRule : function(filename, sign){
-        var uri = filename.replace($proj.base + $proj.workspace.env.path, "/");
+        //var uri = filename.replace($proj.base + $proj.workspace.env.path, "/");
+        var uri = filename.replace($proj.workspace.env.root, "/");
+        var lastIndex = uri.lastIndexOf(".");
+        var name = uri.substring(0, lastIndex);
+        var ext = uri.substring(lastIndex);
+        var newName = name + "." + sign + ext;
 
         // RewriteCond %{REQUEST_URI} ^/css/g.css$ [NC] [AND]
         // RewriteCond %{QUERY_STRING} !^.+$ [NC]
@@ -36,7 +41,8 @@ var HTAccessFile = {
 
         this.rules.push("RewriteCond %{REQUEST_URI} ^" + uri + "$ [NC] [AND]\n");
         this.rules.push("RewriteCond %{QUERY_STRING} !^.+$ [NC]\n")
-        this.rules.push("RewriteRule " + uri.substr(1) + "$ " + uri + "?" + sign + " [QSA,R=301,L]\n\n");
+        this.rules.push("RewriteRule " + uri.substr(1) + "$ " + newName + " [PT,L]\n\n");
+        //this.rules.push("RewriteRule " + uri.substr(1) + "$ " + uri + "?" + sign + " [QSA,R=301,L]\n\n");
     },
     read : function(){
         return fs.readFileSync($tpl, "UTF-8");
@@ -65,41 +71,6 @@ var HTAccessFile = {
         var stat = fs.lstatSync(name);
 
         return stat.isFile();
-    },
-    rename : function(path){
-        fs.open(path + ".sha1", "r", function(err, fd){
-            console.dir(err)
-            if(!err){
-                var sign = fs.readFileSync(path + ".sha1", {
-                    encoding: "utf8"
-                });
-                fs.closeSync(fd);
-
-                console.log("sign: " + sign);
-                console.log("path: " + path);
-                console.log("to: " + path + "." + sign);
-
-                //spawn("cp", [path, path + "." + sign]);
-
-                var _fd = fs.openSync(path, "r");
-                if(_fd){
-                    var irs = fs.createReadStream(path, {
-                        flags: 'r',
-                        fd: _fd,
-                        mode: "0644",
-                        autoClose: true
-                    });
-                    var ows = fs.createWriteStream(path + "." + sign, {
-                        mode : "0644"
-                    });
-
-                    irs.pipe(ows);
-
-                    HTAccessFile.addRule(path, sign);
-
-                }
-            }
-        });
     },
     ls : function(root, path){
         if(!fs.existsSync(path)){
@@ -133,13 +104,31 @@ var HTAccessFile = {
 
             if(this.isDirectory(absPath)){
                 this.ls(absPath + "/", absPath);
-            }else if(this.isFile(absPath) && ext.test(absPath)){
-                if(fs.existsSync(absPath + ".sha1")){
-                    var sign = fs.readFileSync(absPath + ".sha1", {encoding:"utf8"});
+            }else if(this.isFile(absPath) && fs.existsSync(absPath + ".sha1")){
+                var sign = fs.readFileSync(absPath + ".sha1", {encoding:"utf8"});
 
-                    // fs.writeFileSync(absPath + "." + sign, fs.readFileSync(absPath, "UTF-8"), {
-                    //     "encoding": "utf8"
-                    // });
+                // fs.writeFileSync(absPath + "." + sign, fs.readFileSync(absPath, "UTF-8"), {
+                //     "encoding": "utf8"
+                // });
+                
+                var _fd = fs.openSync(absPath, "r");
+                var lastIndex = absPath.lastIndexOf(".");
+                var name = absPath.substring(0, lastIndex);
+                var ext = absPath.substring(lastIndex);
+                var newName = name + "." + sign + ext;
+
+                if(_fd){
+                    var irs = fs.createReadStream(absPath, {
+                        flags: 'r',
+                        fd: _fd,
+                        mode: "0644",
+                        autoClose: true
+                    });
+                    var ows = fs.createWriteStream(newName, {
+                        mode : "0644"
+                    });
+
+                    irs.pipe(ows);
 
                     HTAccessFile.addRule(absPath, sign);
                 }
@@ -162,6 +151,14 @@ exports.build = function (sock, base, project) {
     if(!fs.existsSync($tpl)){
         emit("deploy", "The template of the htaccess file not found(" + $tpl + ")");
     }else{
-        HTAccessFile.write();
+        exec('ulimit -Sn 4096', function (error, stdout, stderr) {
+            console.log('ulimit::stdout: ' + stdout);
+            console.log('ulimit::stderr: ' + stderr);
+            if (error !== null) {
+              console.log('ulimit::exec error: ' + error);
+            }else{
+                HTAccessFile.write();
+            }
+        });
     }
 }
