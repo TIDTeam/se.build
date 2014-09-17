@@ -272,7 +272,7 @@
         },
         mod : function(mod){
             if(mod){
-                this.html(".mod", this.tree("mod", "mod", mod, false));
+                this.html(".mod", this.tree("mod", "mod", mod, true));
             }else{
                 this.html(".mod", "not config");
             }
