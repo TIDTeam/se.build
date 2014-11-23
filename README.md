@@ -1,7 +1,3 @@
-<style type="text/css">
-del{color:gray}
-i{color:blue}
-</style>
 <h1>Project配置文件</h1>
 
 <pre>
