@@ -1,3 +1,7 @@
+<style type="text/style">
+del{color:gray}
+i{color:blue}
+</style>
 <h1>Project配置文件</h1>
 
 <pre>
@@ -38,7 +42,8 @@
 <h1>资源文件版本控制</h1>
 <p>资源版本控制采用sed命令来操作，通过工作副本中配置sed参数来处理。</p>
 <p>sed命令格式模板：</p>
-<p>sed -i "" 's#<i>name</i>\(\.[0-9a-zA-Z]\{40\}\)\{0,1\}#<i>name</i>.<i>sha1</i>.<i>ext</i>#g' `grep -E <i>name</i>\(\.[0-9a-zA-Z]\{40\}\)\{0,1\} -rl <i>findpath</i>`</p>
+<p>sed -i "" 's#<i>name</i>\(\.[0-9a-zA-Z]\{40\}\)\{0,1\}\.<i>ext</i>#<i>name</i>.<i>sha1</i>.<i>ext</i>#g' `grep -E <i>name</i>\(\.[0-9a-zA-Z]\{40\}\)\{0,1\}\.<i>ext</i> -rl <i>findpath</i>`</p>
+<p>sed -i "" 's#\"<i>name</i>\(\.[0-9a-zA-Z]\{40\}\)\{0,1\}\"#<i>name</i>.<i>sha1</i>.<i>ext</i>#g' `grep -E \"<i>name</i>\(\.[0-9a-zA-Z]\{40\}\)\{0,1\}\" -rl <i>findpath</i>`</p>
 <p><del>资源版本控制采用Apache的URLWrite实现，通过动态生成.htaccess文件来保障资源更新问题。</del></p>
 
 <del>
