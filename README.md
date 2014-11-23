@@ -19,6 +19,11 @@
       - name               //{String} 资源名称
       - alias              //{String} 资源别名
       - type               //{String} 资源类型（js/css/img/html）
+      + sed
+        - turn             //{String} 开关（on/off）
+        - keypath          //{String} 关键路径，如：/js/，/css/，/img/
+        - include          //{Boolean} 替换时是否包含关键路径
+        - findpath         //{Array} 查找路径配置
       - path               //{Object} 资源路径
         - lib              //{String} 库文件路径
         - mod              //{String} 模块文件路径
@@ -31,21 +36,26 @@
 </pre>
 
 <h1>资源文件版本控制</h1>
-<p>资源版本控制采用Apache的URLWrite实现，通过动态生成.htaccess文件来保障资源更新问题。</p>
+<p>资源版本控制采用sed命令来操作，通过工作副本中配置sed参数来处理。</p>
+<p>sed命令格式模板：</p>
+<p>sed -i "" 's#<i>name</i>\(\.[0-9a-zA-Z]\{40\}\)\{0,1\}#<i>name</i>.<i>sha1</i>.<i>ext</i>#g' `grep -E <i>name</i>\(\.[0-9a-zA-Z]\{40\}\)\{0,1\} -rl <i>findpath</i>`</p>
+<p><del>资源版本控制采用Apache的URLWrite实现，通过动态生成.htaccess文件来保障资源更新问题。</del></p>
 
-<h1>.htaccess文件说明</h1>
-<p>动态创建.htaccess文件需要在构建项目的根据下，创建一个.htaccess的文件，格式如下</p>
-<pre>  
-   Options -Indexes +FollowSymLinks
-   
-   RewriteEngine On
-   
-   #{rules}
-</pre>
-<p>
-在构建完成后，工具会去找.htaccess模板文件，如果没有则忽略，否则会对模板文件进行解析，
-并且将 #{rules} 替换成正式配置内容，具体可以参考 htaccess.js 文件中的 addRule() 方法 和 write()方法
-</p>   
+<del>
+  <h1>.htaccess文件说明</h1>
+  <p>动态创建.htaccess文件需要在构建项目的根据下，创建一个.htaccess的文件，格式如下</p>
+  <pre>  
+     Options -Indexes +FollowSymLinks
+     
+     RewriteEngine On
+     
+     #{rules}
+  </pre>
+  <p>
+  在构建完成后，工具会去找.htaccess模板文件，如果没有则忽略，否则会对模板文件进行解析，
+  并且将 #{rules} 替换成正式配置内容，具体可以参考 htaccess.js 文件中的 addRule() 方法 和 write()方法
+  </p> 
+</del>
    
    
    
