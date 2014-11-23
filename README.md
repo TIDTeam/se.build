@@ -1,4 +1,4 @@
-<style type="text/style">
+<style type="text/css">
 del{color:gray}
 i{color:blue}
 </style>
