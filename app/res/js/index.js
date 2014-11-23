@@ -79,7 +79,7 @@
             break;
             case "deploy":
                 Logger.info("**************************************************************************");
-                Logger.info("encode::deploy htaccess...");
+                Logger.info("encode::deploy SED...");
                 Logger.info(body.message);
                 Logger.info("**************************************************************************");
 
