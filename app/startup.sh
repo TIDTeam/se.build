@@ -1,3 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
-node startup.js &
+sudo /usr/bin/ulimit -n 4096 
+sudo node startup.js &

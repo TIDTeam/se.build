@@ -151,7 +151,7 @@ exports.build = function (sock, base, project) {
     if(!fs.existsSync($tpl)){
         emit("deploy", "The template of the htaccess file not found(" + $tpl + ")");
     }else{
-        exec('ulimit -Sn 4096', function (error, stdout, stderr) {
+        exec('ulimit -S -n 4096', function (error, stdout, stderr) {
             console.log('ulimit::stdout: ' + stdout);
             console.log('ulimit::stderr: ' + stderr);
             if (error !== null) {

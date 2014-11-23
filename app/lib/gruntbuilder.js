@@ -5,7 +5,7 @@
 var fs    = require("fs");
 var spawn = require("child_process").spawn;
 var cs    = require("./checksum");
-var ht    = require("./htaccess");
+var sed    = require("./sed");
 
 var gruntConfig = "";
 var $sock = null;
@@ -16,6 +16,7 @@ var npmTasks = [];
 var tasks = [];
 var task = null;
 var dest = "__build__";
+var sedList = [];
 
 var emit = function(state, message){
     $sock.emit("encode", {
@@ -557,11 +558,62 @@ var updateSign = function(){
     //find . -type f -name "index.html" | xargs perl -pi -e 's|(Opera)(\.[a-zA-Z0-9]+)|\1|g'
 }
 
-var writeChecksum = function(file){
+var writeChecksum = function(file, isDest){
     //setTimeout(function(){
         if(fs.existsSync(file)){
             cs.FileSHA1CheckSum(file, function(filename, checksum, isSame){
+
                 cs.WriteSHA1CheckSum(filename, checksum);
+
+                var _ws = $proj.workspace;
+                var _env = _ws.env;
+                var _deploy = _ws.deploy;
+                var _sed = _deploy.sed;
+
+                if(isDest && _sed && "on" == _sed.turn){ //create sed command
+                    //sed -i "" 's#logic/www/app1/index#logic/www/app1/index.22222#g' `grep logic/www/app1/index -rl ./app1`
+                    var relativeName = filename.substring(filename.indexOf(dest) + dest.length);
+                    var ext = relativeName.substring(relativeName.lastIndexOf("."));
+                    var sedName = null;
+                    var findName = null;
+                    var keypath = _sed.keypath;
+                    var include = _sed.include;
+                    var findpath = _sed.findpath;
+                    var seed = _sed.seed;
+                    var keyIndex = relativeName.indexOf(keypath);
+                    var isSeedFile = (seed && (-1 != relativeName.indexOf(seed)));
+
+                    var irs = fs.createReadStream(filename, {
+                        flags: 'r',
+                        mode: "0644",
+                        autoClose: true
+                    });
+
+                    var ows = fs.createWriteStream(filename.replace(ext, "." + checksum + ext), {
+                        mode : "0644"
+                    });
+
+                    irs.pipe(ows);
+
+                    if(!include){
+                        relativeName = relativeName.substring(keyIndex + keypath.length);
+                    }
+
+                    sedName = relativeName.replace(ext, "." + checksum + ext);
+                    findName = relativeName.substring(0, relativeName.indexOf(ext)) + "\\(\\.[0-9a-fA-F]\\{40\\}\\)\\{0,1\\}" + ext.replace(".", "\\.");
+
+                    if("js" == _deploy.type){
+                        if(!isSeedFile){
+                            relativeName = relativeName.substring(0, relativeName.indexOf(ext));
+                            sedName = "\\\"" + sedName.substring(0, sedName.indexOf(ext)) + "\\\"";
+                            findName = "\\\"" + findName.substring(0, findName.indexOf(ext) - 1) + "\\\"";
+                        }
+                    }
+
+                    for(var i = 0, len = findpath.length; i < len; i++){
+                        sedList.push("sed -i \"\" 's#" + findName + "#" + sedName + "#g' `grep -E " + findName + " -rl " + findpath[i] + "`")
+                    }
+                }
 
                 emit("encoding", "storage file sign: " + checksum);
             });
@@ -571,12 +623,12 @@ var writeChecksum = function(file){
 
 var writeDestChecksum = function(file){
     emit("encoding", "create dest file sign...");
-    writeChecksum(file);
+    writeChecksum(file, true);
 }
 
 var writeSourceChecksum = function(file){
     emit("encoding", "create source file sign...");
-    writeChecksum(file);
+    writeChecksum(file, false);
 }
 
 var parseGruntData = function(str){
@@ -661,11 +713,30 @@ var clean = function(){
 
         if(code === 0){
             emit("end", "clean exited with code " + code);
-            ht.build($sock, $base, $proj);
+            createSedShell();
+            sed.run($sock, $base, $proj);
         }else{
             emit("error", "clean exited with code " + code);
         }
     });  
+    
+}
+
+var createSedShell = function(){
+    console.log("sedList: " + sedList);
+
+    var line = [];
+
+    line.push("#!/bin/bash");
+    line.push("\n");
+    line.push(sedList.join("\n"));
+    line.push("\n");
+
+    fs.writeFileSync("./timestamp.sh", line.join("\n"), {
+        "encoding": "utf8"
+    });
+
+    spawn("chmod", ["744", "./timestamp.sh"]);
 }
 
 var run = function(){
@@ -710,6 +781,8 @@ exports.createGruntfile = function (socket, base, project, files) {
     $proj = project;
     $base = base;
     $root = $base + $proj.buildroot + $proj.workspace.env.path;
+
+    sedList = [];
 
     emit("encoding", "init grunt tasks...");
     gruntConfig = fs.readFileSync("./tpl/Gruntfile.tpl", "UTF-8");
