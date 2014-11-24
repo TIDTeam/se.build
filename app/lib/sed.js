@@ -38,11 +38,7 @@ exports.run = function (sock, base, project) {
         r.on('close', function (code) {
             console.log("sed exited with code " + code);
 
-            if(code === 0){
-                emit("deploy", "sed exited with code " + code);
-            }else{
-                emit("error", "sed exited with code " + code);
-            }
+            emit("deploy", "sed exited with code " + code);
         }); 
 
     }else{
