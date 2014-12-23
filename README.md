@@ -23,6 +23,7 @@
         - turn             //{String} 开关（on/off）
         - keypath          //{String} 关键路径，如：/js/，/css/，/img/
         - include          //{Boolean} 替换时是否包含关键路径
+        - seed             //{String} 种子文件
         - findpath         //{Array} 查找路径配置
       - path               //{Object} 资源路径
         - lib              //{String} 库文件路径
