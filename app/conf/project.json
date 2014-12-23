@@ -97,6 +97,179 @@
                     }
                 ]
             }
+        },
+        {
+            "name": "res.seshenghuo.com",
+            "alias": "se_res",
+            "vctrl": "none",
+            "base": "/data/wwwroot/seshenghuo/res.seshenghuo.com", 
+            "buildroot": "/res.seshenghuo.com", 
+            "banner": "/*! Copyright (c) SESHENGHUO.COM - Author: LIJUN - Email: zwlijun@gmail.com */\n",
+            "workspace": {
+                "env": [
+                    {
+                        "name": "正式环境",
+                        "alias": "release",
+                        "root": "/data/wwwroot/seshenghuo/res.seshenghuo.com/htdocs/",
+                        "path": "/htdocs/"
+                    }
+                ],
+                "deploy": [
+                    {
+                        "name": "JavaScript",
+                        "alias": "js",
+                        "type": "js",
+                        "path": {
+                            "lib": "js/lib/",
+                            "mod": "js/mod/",
+                            "logic": "js/logic/"
+                        },
+                        "merge": {
+                            "lib": { 
+                                "se.mix.js": [
+                                    {
+                                        "banner": "/*! Zepto v1.1.4 - zepto event ajax form ie - zeptojs.com/license */\n",
+                                        "file": "zepto-1.1.4.js"
+                                    }, 
+                                    {
+                                        "banner": "/*! Sea.js 2.3.0 | seajs.org/LICENSE.md */\n",
+                                        "file": "sea-2.3.0.js"
+                                    }, 
+                                    {
+                                        "banner": "/*! Sea.js config */\n",
+                                        "file": "se.js"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "name": "CSS",
+                        "alias": "css",
+                        "type": "css",
+                        "path": {
+                            "lib": "css/lib/",
+                            "mod": "css/mod/",
+                            "logic": "css/logic/"
+                        },
+                        "merge": null
+                    },
+                    {
+                        "name": "Images",
+                        "alias": "img",
+                        "type": "img",
+                        "path": {
+                            "lib": "",
+                            "mod": "",
+                            "logic": "img/"
+                        },
+                        "merge": null
+                    }
+                ]
+            }
+        },
+        {
+            "name": "benduo.webapp",
+            "alias": "benduo_webapp_res",
+            "vctrl": "none",
+            "base": "/data/wwwroot/benduo/webapp/trunk/WebContent", 
+            "buildroot": "/benduo.webapp", 
+            "banner": "/*! Copyright (c) BENDUO.COM - Author: LIJUN - Email: zwlijun@gmail.com */\n",
+            "workspace": {
+                "env": [
+                    {
+                        "name": "正式环境",
+                        "alias": "release",
+                        "root": "/data/wwwroot/benduo/webapp/trunk/WebContent",
+                        "path": "/res/"
+                    }
+                ],
+                "deploy": [
+                    {
+                        "name": "JavaScript",
+                        "alias": "js",
+                        "type": "js",
+                        "sed": {
+                            "turn": "on",
+                            "keypath": "/js/",
+                            "include": false,
+                            "seed": "se.mix.js",
+                            "findpath": [
+                                "/data/wwwroot/benduo/webapp/trunk/WebContent/res",
+                                "/data/wwwroot/benduo/webapp/trunk/WebContent/jsp/templates",
+                                "/data/wwwroot/benduo/webapp/trunk/WebContent/jsp/myAwardShow.jsp"
+                            ]
+                        },
+                        "path": {
+                            "lib": "js/lib/",
+                            "mod": "js/mod/",
+                            "logic": "js/logic/"
+                        },
+                        "merge": {
+                            "lib": { 
+                                "se.mix.js": [
+                                    {
+                                        "banner": "/*! Zepto v1.1.4 - zepto event ajax form ie - zeptojs.com/license */\n",
+                                        "file": "zepto-1.1.4.js"
+                                    }, 
+                                    {
+                                        "banner": "/*! Sea.js 2.3.0 | seajs.org/LICENSE.md */\n",
+                                        "file": "sea-2.3.0.js"
+                                    }, 
+                                    {
+                                        "banner": "/*! Sea.js config */\n",
+                                        "file": "se.js"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "name": "CSS",
+                        "alias": "css",
+                        "type": "css",
+                        "sed": {
+                            "turn": "on",
+                            "keypath": "/css/",
+                            "include": true,
+                            "seed": null,
+                            "findpath": [
+                                "/data/wwwroot/benduo/webapp/trunk/WebContent/res",
+                                "/data/wwwroot/benduo/webapp/trunk/WebContent/jsp/templates",
+                                "/data/wwwroot/benduo/webapp/trunk/WebContent/jsp/myAwardShow.jsp"
+                            ]
+                        },
+                        "path": {
+                            "lib": "css/lib/",
+                            "mod": "css/mod/",
+                            "logic": "css/logic/"
+                        },
+                        "merge": null
+                    },
+                    {
+                        "name": "Images",
+                        "alias": "img",
+                        "type": "img",
+                        "sed": {
+                            "turn": "on",
+                            "keypath": "/img/",
+                            "include": true,
+                            "seed": null,
+                            "findpath": [
+                                "/data/wwwroot/benduo/webapp/trunk/WebContent/res",
+                                "/data/wwwroot/benduo/webapp/trunk/WebContent/jsp/templates",
+                                "/data/wwwroot/benduo/webapp/trunk/WebContent/jsp/myAwardShow.jsp"
+                            ]
+                        },
+                        "path": {
+                            "lib": "img/lib/",
+                            "mod": "img/mod/",
+                            "logic": "img/logic/"
+                        },
+                        "merge": null
+                    }
+                ]
+            }
         }
     ]
 }
