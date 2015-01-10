@@ -2,8 +2,6 @@
 
 "use strict";
 
-var fs = require("fs");
-
 module.exports = function(grunt) {
     // Do grunt-related things in here
     var $root = "//{root}";

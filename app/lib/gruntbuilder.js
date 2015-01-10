@@ -219,15 +219,9 @@ var configure = {
                                         if(c[key].hasOwnProperty(f)){
                                             mlist = c[key][f];
 
-                                            filecheck:
+                                            tmp[root + f] = [];
                                             for(var i = 0, size = mlist.length; i < size; i++){
-                                                if(fs.existsSync(root + mlist[i].file)){
-                                                    tmp[root + f].push(root + mlist[i].file);
-                                                }else{
-                                                    delete tmp[root + f];
-
-                                                    break filecheck;
-                                                }
+                                                tmp[root + f].push(root + mlist[i].file);
                                             }
                                         }
                                     }
@@ -350,16 +344,8 @@ var configure = {
                                             mlist = c[key][f];
 
                                             tmp[root + f] = [];
-
-                                            filecheck:
                                             for(var i = 0, size = mlist.length; i < size; i++){
-                                                if(fs.existsSync(root + mlist[i].file)){
-                                                    tmp[root + f].push(root + mlist[i].file);
-                                                }else{
-                                                    delete tmp[root + f];
-                                                    
-                                                    break filecheck;
-                                                }
+                                                tmp[root + f].push(root + mlist[i].file);
                                             }
                                         }
                                     }
