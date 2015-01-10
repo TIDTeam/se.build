@@ -196,46 +196,60 @@ var configure = {
 
                     return o;
                 })(files["logic"]||[])
-            },
-            "concat": (function(){
-                var deploy = $proj.workspace.deploy;
-                var c = deploy.merge;
-                var oPath = deploy.path;
-                var o = {
-                    dist : {
-                        options : {
-                            process: true
-                        },
-                        files : (function(){
-                            var root = $root + dest + "/";
-                            var mlist = null;
-                            var tmp = {};
+            }
+        };
 
-                            for(var key in c){ // group
-                                if(c.hasOwnProperty(key)){
-                                    root += oPath[key];
+        conf["concat"] = (function(){
+            var deploy = $proj.workspace.deploy;
+            var c = deploy.merge;
+            var oPath = deploy.path;
+            var o = {
+                dist : {
+                    options : {
+                        process: true
+                    },
+                    files : (function(){
+                        var root = $root + dest + "/";
+                        var mlist = null;
+                        var tmp = {};
 
-                                    for(var f in c[key]){ // files
-                                        if(c[key].hasOwnProperty(f)){
-                                            mlist = c[key][f];
+                        for(var key in c){ // group
+                            if(c.hasOwnProperty(key)){
+                                root += oPath[key];
 
-                                            tmp[root + f] = [];
-                                            for(var i = 0, size = mlist.length; i < size; i++){
-                                                tmp[root + f].push(root + mlist[i].file);
+                                for(var f in c[key]){ // files
+                                    if(c[key].hasOwnProperty(f)){
+                                        mlist = c[key][f];
+
+                                        var checkCount = 0;
+                                        tmp[root + f] = [];
+                                        for(var i = 0, size = mlist.length; i < size; i++){
+                                            var _file = root + mlist[i].file;
+                                        
+                                            for(var type in conf.uglify){
+                                                if(_file in conf.uglify[type].files){
+                                                    checkCount++;
+                                                }
                                             }
+
+                                            tmp[root + f].push(_file);
+                                        }
+
+                                        if(checkCount != size){
+                                            delete tmp[root + f];
                                         }
                                     }
                                 }
                             }
-                            return tmp;
-                        })()
-                    }
-                };
+                        }
+                        return tmp;
+                    })()
+                }
+            };
 
-                return o;
+            return o;
 
-            })()
-        };
+        })();
 
         replace("root", $root);
         replace("dest", dest);
@@ -343,9 +357,22 @@ var configure = {
                                         if(c[key].hasOwnProperty(f)){
                                             mlist = c[key][f];
 
+                                            var checkCount = 0;
                                             tmp[root + f] = [];
                                             for(var i = 0, size = mlist.length; i < size; i++){
-                                                tmp[root + f].push(root + mlist[i].file);
+                                                var _file = root + mlist[i].file;
+                                            
+                                                for(var type in conf.cssmin){
+                                                    if(_file in conf.cssmin[type].files){
+                                                        checkCount++;
+                                                    }
+                                                }
+
+                                                tmp[root + f].push(_file);
+                                            }
+
+                                            if(checkCount != size){
+                                                delete tmp[root + f];
                                             }
                                         }
                                     }
