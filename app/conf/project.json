@@ -5,15 +5,14 @@
             "name": "se.lib",
             "alias": "se_lib",
             "vctrl": "none",
-            "base": "/data/wwwroot/seshenghuo/build.seshenghuo.com/projects/se.lib/build", 
-            "buildroot": "/se.lib/src", 
             "banner": "/*! Copyright (c) SESHENGHUO.COM - Author: LIJUN - Email: zwlijun@gmail.com - Git: https://github.com/zwlijun/se.lib */\n",
             "workspace": {
                 "env": [
                     {
                         "name": "正式环境",
                         "alias": "release",
-                        "root": "/data/wwwroot/seshenghuo/build.seshenghuo.com/projects/se.lib/build/",
+                        "buildroot": "/se.lib/src", 
+                        "documentroot": "/data/wwwroot/seshenghuo/build.seshenghuo.com/projects/se.lib/build/",
                         "path": "/"
                     }
                 ],
@@ -40,8 +39,8 @@
                             "lib": { 
                                 "se.mix.js": [
                                     {
-                                        "banner": "/*! Zepto v1.1.4 - zepto event ajax form ie - zeptojs.com/license */\n",
-                                        "file": "zepto-1.1.4.js"
+                                        "banner": "/*! Zepto v1.1.6 - zepto event ajax form ie - zeptojs.com/license */\n",
+                                        "file": "zepto-1.1.6.js"
                                     }, 
                                     {
                                         "banner": "/*! Sea.js 2.3.0 | seajs.org/LICENSE.md */\n",
@@ -102,15 +101,14 @@
             "name": "res.seshenghuo.com",
             "alias": "se_res",
             "vctrl": "none",
-            "base": "/data/wwwroot/seshenghuo/res.seshenghuo.com", 
-            "buildroot": "/res.seshenghuo.com", 
             "banner": "/*! Copyright (c) SESHENGHUO.COM - Author: LIJUN - Email: zwlijun@gmail.com */\n",
             "workspace": {
                 "env": [
                     {
                         "name": "正式环境",
                         "alias": "release",
-                        "root": "/data/wwwroot/seshenghuo/res.seshenghuo.com/htdocs/",
+                        "buildroot": "/res.seshenghuo.com",
+                        "documentroot": "/data/wwwroot/seshenghuo/res.seshenghuo.com/htdocs/",
                         "path": "/htdocs/"
                     }
                 ],
@@ -128,8 +126,8 @@
                             "lib": { 
                                 "se.mix.js": [
                                     {
-                                        "banner": "/*! Zepto v1.1.4 - zepto event ajax form ie - zeptojs.com/license */\n",
-                                        "file": "zepto-1.1.4.js"
+                                        "banner": "/*! Zepto v1.1.6 - zepto event ajax form ie - zeptojs.com/license */\n",
+                                        "file": "zepto-1.1.6.js"
                                     }, 
                                     {
                                         "banner": "/*! Sea.js 2.3.0 | seajs.org/LICENSE.md */\n",
@@ -169,18 +167,24 @@
             }
         },
         {
-            "name": "benduo.webapp",
-            "alias": "benduo_webapp_res",
-            "vctrl": "none",
-            "base": "/data/wwwroot/benduo/webapp/trunk/WebContent", 
-            "buildroot": "/benduo.webapp", 
-            "banner": "/*! Copyright (c) BENDUO.COM - Author: LIJUN - Email: zwlijun@gmail.com */\n",
+            "name": "最酷网",
+            "alias": "zuiku_webapp",
+            "vctrl": "none",  
+            "banner": "/*! Copyright (c) ZUIKU.COM - Author: LIJUN - Email: zwlijun@gmail.com */\n",
             "workspace": {
                 "env": [
                     {
-                        "name": "正式环境",
-                        "alias": "release",
-                        "root": "/data/wwwroot/benduo/webapp/trunk/WebContent",
+                        "name": "开发测试环境",
+                        "alias": "dev",
+                        "buildroot": "/zuiku.webapp.dev",
+                        "documentroot": "/data/wwwroot/benduo/workspace/dev",
+                        "path": "/res/"
+                    },
+                    {
+                        "name": "正式发布环境",
+                        "alias": "online",
+                        "buildroot": "/zuiku.webapp.online",
+                        "documentroot": "/data/wwwroot/benduo/workspace/online",
                         "path": "/res/"
                     }
                 ],
@@ -195,9 +199,10 @@
                             "include": false,
                             "seed": "se.mix.js",
                             "findpath": [
-                                "/data/wwwroot/benduo/webapp/trunk/WebContent/res",
-                                "/data/wwwroot/benduo/webapp/trunk/WebContent/jsp/templates",
-                                "/data/wwwroot/benduo/webapp/trunk/WebContent/jsp/myAwardShow.jsp"
+                                "/res",
+                                "/open",
+                                "/jsp/templates/meeting.jsp",
+                                "/jsp/myAwardShow.jsp"
                             ]
                         },
                         "path": {
@@ -209,8 +214,8 @@
                             "lib": { 
                                 "se.mix.js": [
                                     {
-                                        "banner": "/*! Zepto v1.1.4 - zepto event ajax form ie - zeptojs.com/license */\n",
-                                        "file": "zepto-1.1.4.js"
+                                        "banner": "/*! Zepto v1.1.6 - zepto event ajax form ie - zeptojs.com/license */\n",
+                                        "file": "zepto-1.1.6.js"
                                     }, 
                                     {
                                         "banner": "/*! Sea.js 2.3.0 | seajs.org/LICENSE.md */\n",
@@ -234,9 +239,10 @@
                             "include": true,
                             "seed": null,
                             "findpath": [
-                                "/data/wwwroot/benduo/webapp/trunk/WebContent/res",
-                                "/data/wwwroot/benduo/webapp/trunk/WebContent/jsp/templates",
-                                "/data/wwwroot/benduo/webapp/trunk/WebContent/jsp/myAwardShow.jsp"
+                                "/res",
+                                "/open",
+                                "/jsp/templates/meeting.jsp",
+                                "/jsp/myAwardShow.jsp"
                             ]
                         },
                         "path": {
@@ -256,9 +262,109 @@
                             "include": true,
                             "seed": null,
                             "findpath": [
-                                "/data/wwwroot/benduo/webapp/trunk/WebContent/res",
-                                "/data/wwwroot/benduo/webapp/trunk/WebContent/jsp/templates",
-                                "/data/wwwroot/benduo/webapp/trunk/WebContent/jsp/myAwardShow.jsp"
+                                "/res",
+                                "/open",
+                                "/jsp/templates/meeting.jsp",
+                                "/jsp/myAwardShow.jsp"
+                            ]
+                        },
+                        "path": {
+                            "lib": "img/lib/",
+                            "mod": "img/mod/",
+                            "logic": "img/logic/"
+                        },
+                        "merge": null
+                    }
+                ]
+            }
+        },
+        {
+            "name": "微播",
+            "alias": "weibo_webapp_res",
+            "vctrl": "none",
+            "banner": "/*! Copyright (c) ZUIKU.COM - Author: LIJUN - Email: zwlijun@gmail.com */\n",
+            "workspace": {
+                "env": [
+                    {
+                        "name": "正式环境",
+                        "alias": "release",
+                        "buildroot": "/weibo.webapp", 
+                        "documentroot": "/data/wwwroot/weibo114/trunk/WebContent",
+                        "path": "/res/"
+                    }
+                ],
+                "deploy": [
+                    {
+                        "name": "JavaScript",
+                        "alias": "js",
+                        "type": "js",
+                        "sed": {
+                            "turn": "off",
+                            "keypath": "/js/",
+                            "include": false,
+                            "seed": "se.mix.js",
+                            "findpath": [
+                                "/data/wwwroot/weibo114/trunk/WebContent/res",
+                                "/data/wwwroot/weibo114/trunk/WebContent/jsp/templates"
+                            ]
+                        },
+                        "path": {
+                            "lib": "js/lib/",
+                            "mod": "js/mod/",
+                            "logic": "js/logic/"
+                        },
+                        "merge": {
+                            "lib": { 
+                                "se.mix.js": [
+                                    {
+                                        "banner": "/*! Zepto v1.1.6 - zepto event ajax form ie - zeptojs.com/license */\n",
+                                        "file": "zepto-1.1.6.js"
+                                    }, 
+                                    {
+                                        "banner": "/*! Sea.js 2.3.0 | seajs.org/LICENSE.md */\n",
+                                        "file": "sea-2.3.0.js"
+                                    }, 
+                                    {
+                                        "banner": "/*! Sea.js config */\n",
+                                        "file": "se.js"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "name": "CSS",
+                        "alias": "css",
+                        "type": "css",
+                        "sed": {
+                            "turn": "off",
+                            "keypath": "/css/",
+                            "include": true,
+                            "seed": null,
+                            "findpath": [
+                                "/data/wwwroot/weibo114/trunk/WebContent/res",
+                                "/data/wwwroot/weibo114/trunk/WebContent/jsp/templates"
+                            ]
+                        },
+                        "path": {
+                            "lib": "css/lib/",
+                            "mod": "css/mod/",
+                            "logic": "css/logic/"
+                        },
+                        "merge": null
+                    },
+                    {
+                        "name": "Images",
+                        "alias": "img",
+                        "type": "img",
+                        "sed": {
+                            "turn": "off",
+                            "keypath": "/img/",
+                            "include": true,
+                            "seed": null,
+                            "findpath": [
+                                "/data/wwwroot/weibo114/trunk/WebContent/res",
+                                "/data/wwwroot/weibo114/trunk/WebContent/jsp/templates"
                             ]
                         },
                         "path": {

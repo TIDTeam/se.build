@@ -29,7 +29,7 @@ var HTAccessFile = {
     rules : [],
     addRule : function(filename, sign){
         //var uri = filename.replace($proj.base + $proj.workspace.env.path, "/");
-        var uri = filename.replace($proj.workspace.env.root, "/");
+        var uri = filename.replace($proj.workspace.env.documentroot, "/");
         var lastIndex = uri.lastIndexOf(".");
         var name = uri.substring(0, lastIndex);
         var ext = uri.substring(lastIndex);
@@ -48,7 +48,7 @@ var HTAccessFile = {
         return fs.readFileSync($tpl, "UTF-8");
     },
     write : function(){
-        var root = $proj.base + $proj.workspace.env.path;
+        var root = $$proj.workspace.env.documentroot + $proj.workspace.env.path;
         var tpl = this.read();
 
         this.rules = [];
@@ -56,7 +56,7 @@ var HTAccessFile = {
 
         tpl = tpl.replace("#{rules}", this.rules.join(""));
 
-        fs.writeFileSync($proj.workspace.env.root + file, tpl, {
+        fs.writeFileSync($proj.workspace.env.documentroot + file, tpl, {
             "encoding": "utf8"
         });
 

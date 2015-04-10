@@ -637,7 +637,7 @@ var writeChecksum = function(file, isDest){
                     }
 
                     for(var i = 0, len = findpath.length; i < len; i++){
-                        sedList.push("sed -i \"\" 's#" + findName + "#" + sedName + "#g' `grep -E " + findName + " -rl " + findpath[i] + "`")
+                        sedList.push("sed -i \"\" 's#" + findName + "#" + sedName + "#g' `grep -E " + findName + " -rl " + _env.documentroot + findpath[i] + "`")
                     }
                 }
 
@@ -678,10 +678,10 @@ var parseGruntImageData = function(str){
     writeSourceChecksum(source);
     writeDestChecksum(min);
 }
-
+    
 var copy = function(){
     var cwd = $root + dest;
-    var target = $proj.base + $proj.workspace.env.path;
+    var target = $proj.workspace.env.documentroot + $proj.workspace.env.path;
     var cur = process.cwd();
 
     emit("encoding", "Copy " + cwd + " -> " + target);
@@ -806,7 +806,7 @@ exports.createGruntfile = function (socket, base, project, files) {
     $sock = socket;
     $proj = project;
     $base = base;
-    $root = $base + $proj.buildroot + $proj.workspace.env.path;
+    $root = $base + $proj.workspace.env.buildroot + $proj.workspace.env.path;
 
     sedList = [];
 

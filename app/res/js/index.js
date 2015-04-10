@@ -248,7 +248,7 @@
             for(var i = 0; i < size; i++){
                 info = filelist[i];
 
-                buf.push('<dd class="filename"><input type="checkbox" name="' + type + '_file" id="' + type + '_' + sum + "_" + info.checksum + '" value="' + type + "," + sum + "," + info.checksum + "," + info.absoulte + '" data-hook="1" data-filetype="file"><label for="' + type + '_' + sum + "_" + info.checksum + '"' + (info.isUpdate ? ' class="update"' : '') + '>' + info.filename + '</label></dd>');
+                buf.push('<dd class="filename"><input' + (true === checked ? ' checked="checked"  disabled="disabled"':'') + ' type="checkbox" name="' + type + '_file" id="' + type + '_' + sum + "_" + info.checksum + '" value="' + type + "," + sum + "," + info.checksum + "," + info.absoulte + '" data-hook="1" data-filetype="file"><label for="' + type + '_' + sum + "_" + info.checksum + '"' + (info.isUpdate ? ' class="update"' : '') + '>' + info.filename + '</label></dd>');
             }
 
             for(var key in data){

@@ -123,7 +123,7 @@ Workspace.prototype = {
         var wp = project.workspace;
         var env = wp.env;
         var deploy = wp.deploy;
-        var broot = project.buildroot;
+        var broot = env.buildroot;
 
         //console.log("----------------------------");
         //console.log(JSON.stringify(project));
